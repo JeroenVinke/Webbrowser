@@ -11,5 +11,6 @@
         public const string Initial = "Initial";
         public const string ElementRule = "Element";
         public const string ElementsRule = "Elements";
+        public const string TopElementRule = "TopElement";
     }
 }

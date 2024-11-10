@@ -19,11 +19,11 @@ namespace Compiler.Parser
                     _instance.Add(new Production(ParserConstants.Initial, new List<SubProduction> {
                         new SubProduction(new List<ExpressionDefinition>
                         {
-                            new NonTerminalExpressionDefinition { Identifier = ParserConstants.ElementRule }
+                            new NonTerminalExpressionDefinition { Identifier = ParserConstants.TopElementRule }
                         })
                     }));
 
-                    TagRule.Initialize(ref _instance);
+                    ElementsRule.Initialize(ref _instance);
                 }
 
                 return _instance;
