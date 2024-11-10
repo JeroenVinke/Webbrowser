@@ -19,7 +19,7 @@ namespace Compiler.Parser
                     _instance.Add(new Production(ParserConstants.Initial, new List<SubProduction> {
                         new SubProduction(new List<ExpressionDefinition>
                         {
-                            new NonTerminalExpressionDefinition { Identifier = ParserConstants.TopElementRule }
+                            new NonTerminalExpressionDefinition { Identifier = ParserConstants.ElementRule }
                         })
                     }));
 

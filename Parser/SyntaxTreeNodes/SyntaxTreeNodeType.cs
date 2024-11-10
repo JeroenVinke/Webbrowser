@@ -2,6 +2,6 @@
 {
     public enum SyntaxTreeNodeType
     {
-        Tag
+        Element
     }
 }

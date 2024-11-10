@@ -10,6 +10,8 @@
         EndOfFile,
         EmptyString,
         EndMarker,
+        OpenTag,
+        CloseTag,
         Hash,
         Comma
     }
