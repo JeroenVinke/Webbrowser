@@ -23,7 +23,7 @@ namespace Compiler.Parser.Rules
                             children.Add(node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementRule, ParserConstants.SyntaxTreeNode));
                             children.AddRange(node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementsRule, ParserConstants.SyntaxTreeNode).Children);
 
-                            ElementASTNode astNode = new ElementASTNode("",children );
+                            ElementASTNode astNode = new ElementASTNode("", children);
                             
                             node.Attributes.Add(ParserConstants.SyntaxTreeNode, astNode);
                         })
@@ -35,7 +35,7 @@ namespace Compiler.Parser.Rules
                             new TerminalExpressionDefinition { TokenType = TokenType.EmptyString },
                             new SemanticActionDefinition((ParsingNode node) =>
                             {
-                                node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode("", new List<ElementASTNode>()) { });
+                                node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode("",  new List<ElementASTNode>()) { });
                             })
                         }
                     )
@@ -67,11 +67,13 @@ namespace Compiler.Parser.Rules
                     new TerminalExpressionDefinition { TokenType = TokenType.CloseTag },
                     new SemanticActionDefinition((ParsingNode node) =>
                     {
-                        string elementName = node.GetAttributeForKey<WordToken>("OpenTag", ParserConstants.Token).Lexeme.Replace("<","").Replace(">","");
+                        string rawHtmlElement = node.GetAttributeForKey<WordToken>("OpenTag", ParserConstants.Token).Lexeme;
+
+                        var htmlElement = new rawHtmlElement(rawHtmlElement);
 
                         ElementASTNode elementsNode = node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementsRule, ParserConstants.SyntaxTreeNode);
                         
-                        node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode(elementName, elementsNode.Children) { });
+                        node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode(htmlElement.Name, htmlElement.Attributes, elementsNode.Children) { });
                     })
                 }
             );
