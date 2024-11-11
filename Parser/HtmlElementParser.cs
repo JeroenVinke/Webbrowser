@@ -5,12 +5,12 @@ using System.Text.RegularExpressions;
 
 namespace Compiler.Parser
 {
-    public class rawHtmlElement
+    public class HtmlElement
     {
         public string Name { get; private set; }
         public Dictionary<string, string> Attributes { get; private set; }
 
-        public rawHtmlElement(string rawElement)
+        public HtmlElement(string rawElement)
         {
             Attributes = new Dictionary<string, string>();
             ParseElement(rawElement);

@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\LexicalAnalyer\LexicalAnalyer.csproj" />
     <ProjectReference Include="..\..\Parser\Parser.csproj" />
+    <ProjectReference Include="..\..\Webbrowser.Core\Webbrowser.Core.csproj" />
   </ItemGroup>
 
 </Project>

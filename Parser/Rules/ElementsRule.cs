@@ -44,7 +44,8 @@ namespace Compiler.Parser.Rules
             grammar.Add(new Production(ParserConstants.ElementRule,
                 new List<SubProduction>
                 {
-                    ElementRule()
+                    ElementRule(),
+                    ElementWithIdentifierRule()
                 }
             ));
             grammar.Add(new Production(ParserConstants.TopElementRule,
@@ -53,6 +54,30 @@ namespace Compiler.Parser.Rules
                     ElementRule()
                 }
             ));
+        }
+
+
+        private static SubProduction ElementWithIdentifierRule()
+        {
+            return new SubProduction
+            (
+                new List<ExpressionDefinition>
+                {
+                    new TerminalExpressionDefinition { TokenType = TokenType.OpenTag },
+                    new TerminalExpressionDefinition { TokenType = TokenType.Identifier },
+                    new TerminalExpressionDefinition { TokenType = TokenType.CloseTag },
+                    new SemanticActionDefinition((ParsingNode node) =>
+                    {
+                        string rawHtmlElement = node.GetAttributeForKey<WordToken>("OpenTag", ParserConstants.Token).Lexeme;
+
+                        var htmlElement = new HtmlElement(rawHtmlElement);
+
+                        string innerText = node.GetAttributeForKey<WordToken>("Identifier", ParserConstants.Token).Lexeme;
+
+                        node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode(htmlElement.Name, htmlElement.Attributes, new List<ElementASTNode>(), innerText) { });
+                    })
+                }
+            );
         }
 
 
@@ -69,7 +94,7 @@ namespace Compiler.Parser.Rules
                     {
                         string rawHtmlElement = node.GetAttributeForKey<WordToken>("OpenTag", ParserConstants.Token).Lexeme;
 
-                        var htmlElement = new rawHtmlElement(rawHtmlElement);
+                        var htmlElement = new HtmlElement(rawHtmlElement);
 
                         ElementASTNode elementsNode = node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementsRule, ParserConstants.SyntaxTreeNode);
                         
