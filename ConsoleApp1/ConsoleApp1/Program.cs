@@ -2,6 +2,7 @@
 
 using Compiler.LexicalAnalyer;
 using Compiler.Parser;
+using Compiler.Parser.SyntaxTreeNodes;
 using Webbrowser.Core;
 using SyntaxTreeNode = Compiler.RegularExpressionEngine.SyntaxTreeNode;
 
@@ -12,7 +13,7 @@ var parser = new BottomUpParser();
 LexicalAnalyzer analyzer = new LexicalAnalyzer(LexicalLanguage.GetLanguage(), input);
 parser.Parse(analyzer);
 
-Compiler.Parser.SyntaxTreeNode node = parser.TopLevelAST;
+ElementASTNode node = (ElementASTNode)parser.TopLevelAST;
 
-RenderTree renderTree = new RenderTree();
+RenderTreeNode renderTreeNode = new RenderTreeGenerator(node).Generate();
 ;
