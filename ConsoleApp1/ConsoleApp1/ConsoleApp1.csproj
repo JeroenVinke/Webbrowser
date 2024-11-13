@@ -8,8 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\LexicalAnalyer\LexicalAnalyer.csproj" />
-    <ProjectReference Include="..\..\Parser\Parser.csproj" />
+    <ProjectReference Include="..\..\CSSLexicalAnalyer\CSSLexicalAnalyer.csproj" />
+    <ProjectReference Include="..\..\CSSParser\CSSParser.csproj" />
+    <ProjectReference Include="..\..\HTMLLexicalAnalyer\HTMLLexicalAnalyer.csproj" />
+    <ProjectReference Include="..\..\HTMLParser\HTMLParser.csproj" />
     <ProjectReference Include="..\..\Webbrowser.Core\Webbrowser.Core.csproj" />
   </ItemGroup>
 

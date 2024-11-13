@@ -7,13 +7,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{C5E04DC0-892B-44BC-8D86-5438E2D2BE58}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LexicalAnalyer", "..\LexicalAnalyer\LexicalAnalyer.csproj", "{51945DA8-9713-4A7E-9193-3137E51CCEBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTMLLexicalAnalyer", "..\HTMLLexicalAnalyer\HTMLLexicalAnalyer.csproj", "{51945DA8-9713-4A7E-9193-3137E51CCEBF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Parser", "..\Parser\Parser.csproj", "{EAE5109E-6E17-4F48-9494-C84265387B89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HTMLParser", "..\HTMLParser\HTMLParser.csproj", "{EAE5109E-6E17-4F48-9494-C84265387B89}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RegularExpressionEngine", "..\RegularExpressionEngine\RegularExpressionEngine.csproj", "{DF30FF80-C240-4B12-A3BB-92E9C8212A6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webbrowser.Core", "..\Webbrowser.Core\Webbrowser.Core.csproj", "{A5172631-3FE8-4160-B72C-FF007F713FF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webbrowser.Core", "..\Webbrowser.Core\Webbrowser.Core.csproj", "{A5172631-3FE8-4160-B72C-FF007F713FF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HTML", "HTML", "{27789DFA-2897-491A-B785-0461FBC4FC5A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSS", "CSS", "{FD280935-D883-44CF-95E3-47D5B312F9EA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSSParser", "..\CSSParser\CSSParser.csproj", "{9C6CE633-62F6-4B92-8B14-449653A79BB3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSSLexicalAnalyer", "..\CSSLexicalAnalyer\CSSLexicalAnalyer.csproj", "{1C25903C-0A9C-4825-960A-2445677B2F8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,9 +53,23 @@ Global
 		{A5172631-3FE8-4160-B72C-FF007F713FF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5172631-3FE8-4160-B72C-FF007F713FF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5172631-3FE8-4160-B72C-FF007F713FF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C6CE633-62F6-4B92-8B14-449653A79BB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C6CE633-62F6-4B92-8B14-449653A79BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C6CE633-62F6-4B92-8B14-449653A79BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C6CE633-62F6-4B92-8B14-449653A79BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C25903C-0A9C-4825-960A-2445677B2F8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C25903C-0A9C-4825-960A-2445677B2F8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C25903C-0A9C-4825-960A-2445677B2F8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C25903C-0A9C-4825-960A-2445677B2F8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51945DA8-9713-4A7E-9193-3137E51CCEBF} = {27789DFA-2897-491A-B785-0461FBC4FC5A}
+		{EAE5109E-6E17-4F48-9494-C84265387B89} = {27789DFA-2897-491A-B785-0461FBC4FC5A}
+		{9C6CE633-62F6-4B92-8B14-449653A79BB3} = {FD280935-D883-44CF-95E3-47D5B312F9EA}
+		{1C25903C-0A9C-4825-960A-2445677B2F8C} = {FD280935-D883-44CF-95E3-47D5B312F9EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D238307B-83E8-4605-AD0B-863A36D63ECE}

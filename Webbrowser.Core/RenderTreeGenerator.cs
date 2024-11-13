@@ -1,5 +1,4 @@
-﻿using Compiler.Parser;
-using Compiler.Parser.SyntaxTreeNodes;
+﻿using HTMLParser.SyntaxTreeNodes;
 
 namespace Webbrowser.Core
 {

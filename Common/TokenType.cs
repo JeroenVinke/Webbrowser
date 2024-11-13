@@ -13,6 +13,10 @@
         OpenTag,
         CloseTag,
         Hash,
-        Comma
+        Comma,
+        BracketOpen,
+        BracketClosed,
+        Colon,
+        Semicolon
     }
 }

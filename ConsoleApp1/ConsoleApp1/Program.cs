@@ -1,19 +1,29 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Compiler.LexicalAnalyer;
-using Compiler.Parser;
-using Compiler.Parser.SyntaxTreeNodes;
+using HTMLLexicalAnalyer;
+using HTMLParser.SyntaxTreeNodes;
 using Webbrowser.Core;
-using SyntaxTreeNode = Compiler.RegularExpressionEngine.SyntaxTreeNode;
 
-string input = "<html><head></head><body background=\"yellow\"><p>this is my text</p><p style=\"display:none\">hidden</p></body></html>";
+string htmlInput = "<html><head></head><body background=\"yellow\"><p>this is my text</p><p style=\"display:none\">hidden</p></body></html>";
 
-var parser = new BottomUpParser();
+var htmlParser = new HTMLParser.BottomUpParser();
 
-LexicalAnalyzer analyzer = new LexicalAnalyzer(LexicalLanguage.GetLanguage(), input);
-parser.Parse(analyzer);
+LexicalAnalyzer htmlAnalyzer = new LexicalAnalyzer(HTMLLexicalAnalyer.LexicalLanguage.GetLanguage(), htmlInput);
+htmlParser.Parse(htmlAnalyzer);
 
-ElementASTNode node = (ElementASTNode)parser.TopLevelAST;
+HTMLParser.SyntaxTreeNodes.ElementASTNode node = (HTMLParser.SyntaxTreeNodes.ElementASTNode)htmlParser.TopLevelAST;
 
 RenderTreeNode renderTreeNode = new RenderTreeGenerator(node).Generate();
+
+string cssInput = "p { color: red; }";
+
+var cssParser = new CSSParser.BottomUpParser();
+
+var cssAnalyzer = new CSSLexicalAnalyzer.LexicalAnalyzer(CSSLexicalAnalyzer.LexicalLanguage.GetLanguage(), cssInput);
+
+cssParser.Parse(cssAnalyzer);
+
+CSSParser.SyntaxTreeNodes.ElementASTNode cssNode = (CSSParser.SyntaxTreeNodes.ElementASTNode)cssParser.TopLevelAST;
+
 ;

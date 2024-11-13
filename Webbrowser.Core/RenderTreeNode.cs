@@ -1,5 +1,5 @@
 ﻿using System.Drawing;
-using Compiler.Parser.SyntaxTreeNodes;
+using HTMLParser.SyntaxTreeNodes;
 
 namespace Webbrowser.Core
 {
