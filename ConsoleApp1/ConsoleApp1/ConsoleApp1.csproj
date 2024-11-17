@@ -15,4 +15,13 @@
     <ProjectReference Include="..\..\Webbrowser.Core\Webbrowser.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="index.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

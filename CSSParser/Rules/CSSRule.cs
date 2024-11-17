@@ -18,12 +18,13 @@ namespace CSSParser.Rules
                         new NonTerminalExpressionDefinition { Identifier = ParserConstants.RuleSetsRule },
                         new SemanticActionDefinition((ParsingNode node) =>
                         {
-                            var children = new List<ElementASTNode>();
+                            var children = new List<RuleSetASTNode>();
 
-                            //children.Add(node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementRule, ParserConstants.SyntaxTreeNode));
-                            //children.AddRange(node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementsRule, ParserConstants.SyntaxTreeNode).Children);
+                            children.Add(node.GetAttributeForKey<RuleSetASTNode>(ParserConstants.RuleSetRule, ParserConstants.SyntaxTreeNode));
+                            children.AddRange(node.GetAttributeForKey<RuleSetsASTNode>(ParserConstants.RuleSetsRule, ParserConstants.SyntaxTreeNode).Children);
 
-                            ElementASTNode astNode = new ElementASTNode("", children);
+                            RuleSetsASTNode astNode = new RuleSetsASTNode();
+                            astNode.Children = children;
                             
                             node.Attributes.Add(ParserConstants.SyntaxTreeNode, astNode);
                         })
@@ -35,7 +36,7 @@ namespace CSSParser.Rules
                             new TerminalExpressionDefinition { TokenType = TokenType.EmptyString },
                             new SemanticActionDefinition((ParsingNode node) =>
                             {
-                                node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode("",  new List<ElementASTNode>()) { });
+                                node.Attributes.Add(ParserConstants.SyntaxTreeNode, new RuleSetsASTNode());
                             })
                         }
                     )
@@ -47,6 +48,66 @@ namespace CSSParser.Rules
                     RuleSetRule()
                 }
             ));
+            grammar.Add(new Production(ParserConstants.DeclarationsRule,
+                new List<SubProduction>
+                {
+                    new SubProduction(new List<ExpressionDefinition>()
+                    {
+                        new NonTerminalExpressionDefinition { Identifier = ParserConstants.DeclarationRule },
+                        new NonTerminalExpressionDefinition { Identifier = ParserConstants.DeclarationsRule },
+                        new SemanticActionDefinition((ParsingNode node) =>
+                        {
+                            var children = new List<DeclarationASTNode>();
+
+                            children.Add(node.GetAttributeForKey<DeclarationASTNode>(ParserConstants.DeclarationRule, ParserConstants.SyntaxTreeNode));
+                            children.AddRange(node.GetAttributeForKey<DeclarationsASTNode>(ParserConstants.DeclarationsRule, ParserConstants.SyntaxTreeNode).Children);
+
+                            DeclarationsASTNode astNode = new DeclarationsASTNode();
+                            astNode.Children = children;
+
+                            node.Attributes.Add(ParserConstants.SyntaxTreeNode, astNode);
+                        })
+                    }),
+                    new SubProduction
+                    (
+                        new List<ExpressionDefinition>
+                        {
+                            new TerminalExpressionDefinition { TokenType = TokenType.EmptyString },
+                            new SemanticActionDefinition((ParsingNode node) =>
+                            {
+                                node.Attributes.Add(ParserConstants.SyntaxTreeNode, new DeclarationsASTNode());
+                            })
+                        }
+                    )
+                }
+            ));
+            grammar.Add(new Production(ParserConstants.DeclarationRule,
+                new List<SubProduction>
+                {
+                    DeclarationRule()
+                }
+            ));
+        }
+
+        private static SubProduction DeclarationRule()
+        {
+            return new SubProduction
+            (
+                new List<ExpressionDefinition>
+                {
+                    new TerminalExpressionDefinition { TokenType = TokenType.Identifier, Key = "Property" },
+                    new TerminalExpressionDefinition { TokenType = TokenType.Colon },
+                    new TerminalExpressionDefinition { TokenType = TokenType.Identifier, Key = "Value" },
+                    new TerminalExpressionDefinition { TokenType = TokenType.Semicolon },
+                    new SemanticActionDefinition((ParsingNode node) =>
+                    {
+                        string property = node.GetAttributeForKey<WordToken>("Property", ParserConstants.Token).Lexeme;
+                        string value = node.GetAttributeForKey<WordToken>("Value", ParserConstants.Token).Lexeme;
+                        ;
+                        node.Attributes.Add(ParserConstants.SyntaxTreeNode, new DeclarationASTNode(property, value) { });
+                    })
+                }
+            );
         }
 
 
@@ -56,22 +117,16 @@ namespace CSSParser.Rules
             (
                 new List<ExpressionDefinition>
                 {
-                    new TerminalExpressionDefinition { TokenType = TokenType.Identifier },
+                    new TerminalExpressionDefinition { TokenType = TokenType.Identifier, Key = "Selector" },
                     new TerminalExpressionDefinition { TokenType = TokenType.BracketOpen },
-                    new TerminalExpressionDefinition { TokenType = TokenType.Identifier },
-                    new TerminalExpressionDefinition { TokenType = TokenType.Colon },
-                    new TerminalExpressionDefinition { TokenType = TokenType.Identifier },
-                    new TerminalExpressionDefinition { TokenType = TokenType.Semicolon },
+                    new NonTerminalExpressionDefinition() { Identifier = ParserConstants.DeclarationsRule },
                     new TerminalExpressionDefinition { TokenType = TokenType.BracketClosed },
                     new SemanticActionDefinition((ParsingNode node) =>
                     {
-                        //string rawHtmlElement = node.GetAttributeForKey<WordToken>("OpenTag", ParserConstants.Token).Lexeme;
-
-                        //var htmlElement = new HtmlElement(rawHtmlElement);
-
-                        //ElementASTNode elementsNode = node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementsRule, ParserConstants.SyntaxTreeNode);
+                        string selector = node.GetAttributeForKey<WordToken>("Selector", ParserConstants.Token).Lexeme;
+                        List<DeclarationASTNode> declarations = node.GetAttributeForKey<DeclarationsASTNode>(ParserConstants.DeclarationsRule, ParserConstants.SyntaxTreeNode).Children;
                         
-                        //node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode(htmlElement.Name, htmlElement.Attributes, elementsNode.Children) { });
+                        node.Attributes.Add(ParserConstants.SyntaxTreeNode, new RuleSetASTNode(selector, declarations) { });
                     })
                 }
             );

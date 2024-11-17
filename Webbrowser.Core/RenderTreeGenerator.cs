@@ -5,11 +5,13 @@ namespace Webbrowser.Core
     public class RenderTreeGenerator
     {
         private readonly string[] _visibleElements = { "p", "div", "h1", "h2", "body" };
+        private readonly List<CSSRuleSet> _cssRules;
         public ElementASTNode TopLevelNode { get; set; }
 
-        public RenderTreeGenerator(ElementASTNode topLevelNode)
+        public RenderTreeGenerator(ElementASTNode topLevelNode, List<CSSRuleSet> cssRuleSets)
         {
             TopLevelNode = topLevelNode;
+            _cssRules = cssRuleSets;
         }
 
         public RenderTreeNode Generate()
@@ -20,31 +22,33 @@ namespace Webbrowser.Core
         private RenderTreeNode GenerateNode(ElementASTNode node)
         {
             var renderNode = new RenderTreeNode(node);
+            renderNode.ApplyCssRules(_cssRules);
 
             foreach (var child in node.Children)
             {
-                if (IsVisibleNode(child))
+                var childNode = GenerateNode(child);
+                if (IsVisibleNode(childNode))
                 {
-                    renderNode.AddChild(GenerateNode(child));
+                    renderNode.AddChild(childNode);
                 }
             }
 
             return renderNode;
         }
 
-        private bool IsVisibleNode(ElementASTNode node)
+        private bool IsVisibleNode(RenderTreeNode node)
         {
-            if (!_visibleElements.Contains(node.ElementName))
+            if (!_visibleElements.Contains(node.Element))
             {
                 return false;
             }
 
-            //string? displayAttribute = node.Attributes.GetValueOrDefault("display");
+            string? displayAttribute = node.CSSProperties.GetValueOrDefault("display");
 
-            //if (displayAttribute == "none")
-            //{
-            //    return false;
-            //}
+            if (displayAttribute == "none")
+            {
+                return false;
+            }
 
             return true;
         }

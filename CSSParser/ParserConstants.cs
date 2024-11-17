@@ -11,5 +11,7 @@
         public const string Initial = "Initial";
         public const string RuleSetRule = "RuleSet";
         public const string RuleSetsRule = "RuleSets";
+        public const string DeclarationsRule = "DeclarationsRule";
+        public const string DeclarationRule = "DeclarationRule";
     }
 }
