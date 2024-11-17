@@ -17,6 +17,7 @@
         BracketOpen,
         BracketClosed,
         Colon,
-        Semicolon
+        Semicolon,
+        SelfClosingTag
     }
 }

@@ -45,7 +45,8 @@ namespace HTMLParser.Rules
                 new List<SubProduction>
                 {
                     ElementRule(),
-                    ElementWithIdentifierRule()
+                    ElementWithIdentifierRule(),
+                    SelfClosingElementRule()
                 }
             ));
             grammar.Add(new Production(ParserConstants.TopElementRule,
@@ -99,6 +100,26 @@ namespace HTMLParser.Rules
                         ElementASTNode elementsNode = node.GetAttributeForKey<ElementASTNode>(ParserConstants.ElementsRule, ParserConstants.SyntaxTreeNode);
                         
                         node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode(htmlElement.Name, htmlElement.Attributes, elementsNode.Children) { });
+                    })
+                }
+            );
+        }
+
+
+        private static SubProduction SelfClosingElementRule()
+        {
+            return new SubProduction
+            (
+                new List<ExpressionDefinition>
+                {
+                    new TerminalExpressionDefinition { TokenType = TokenType.SelfClosingTag },
+                    new SemanticActionDefinition((ParsingNode node) =>
+                    {
+                        string rawHtmlElement = node.GetAttributeForKey<WordToken>("SelfClosingTag", ParserConstants.Token).Lexeme;
+
+                        var htmlElement = new HtmlElement(rawHtmlElement);
+
+                        node.Attributes.Add(ParserConstants.SyntaxTreeNode, new ElementASTNode(htmlElement.Name, htmlElement.Attributes, new List<ElementASTNode>()) { });
                     })
                 }
             );
