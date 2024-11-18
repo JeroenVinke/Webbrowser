@@ -1,0 +1,7 @@
+Initial -> RuleSets
+RuleSets -> RuleSet RuleSets Action
+		 | EmptyString Action
+RuleSet -> Identifier BracketOpen DeclarationsRule BracketClosed Action
+DeclarationsRule -> DeclarationRule DeclarationsRule Action
+		 | EmptyString Action
+DeclarationRule -> Identifier Colon Identifier Semicolon Action

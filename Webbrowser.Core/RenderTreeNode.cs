@@ -1,18 +1,15 @@
-﻿using System.Data;
-using System.Drawing;
-using Compiler.RegularExpressionEngine;
-using HTMLParser.SyntaxTreeNodes;
+﻿using HTMLParser.SyntaxTreeNodes;
 
 namespace Webbrowser.Core
 {
     public class RenderTreeNode
     {
-        public Rectangle Layout { get; set; }
         public string Type { get; set; }
 
         public string Element { get; set; }
         public string Id { get; set; }
         public string Class { get; set; }
+        public string InnerText { get; set; } = "";
         public int? Width => GetSizeInPixels("width");
         public int? Height => GetSizeInPixels("height");
         public int PaddingLeft => GetSizeInPixels("padding-left").Value;
@@ -59,7 +56,7 @@ namespace Webbrowser.Core
             Id = node.Attributes.GetValueOrDefault("id") ?? "";
             Element = node.ElementName;
             Type = node.ElementName;
-            Layout = new Rectangle(0, 0, 100, 100);
+            InnerText = node.InnerText;
         }
 
         public List<RenderTreeNode> Children { get; set; } = new ();

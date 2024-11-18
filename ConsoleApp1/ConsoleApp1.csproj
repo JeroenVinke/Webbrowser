@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\CSSLexicalAnalyer\CSSLexicalAnalyer.csproj" />
-    <ProjectReference Include="..\..\CSSParser\CSSParser.csproj" />
-    <ProjectReference Include="..\..\HTMLLexicalAnalyer\HTMLLexicalAnalyer.csproj" />
-    <ProjectReference Include="..\..\HTMLParser\HTMLParser.csproj" />
-    <ProjectReference Include="..\..\Webbrowser.Core\Webbrowser.Core.csproj" />
+    <ProjectReference Include="..\CSSLexicalAnalyer\CSSLexicalAnalyer.csproj" />
+    <ProjectReference Include="..\CSSParser\CSSParser.csproj" />
+    <ProjectReference Include="..\HTMLLexicalAnalyer\HTMLLexicalAnalyer.csproj" />
+    <ProjectReference Include="..\HTMLParser\HTMLParser.csproj" />
+    <ProjectReference Include="..\Webbrowser.Core\Webbrowser.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
