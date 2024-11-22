@@ -48,6 +48,7 @@ namespace Webbrowser.Core
             { "border-bottom", "0px" },
         };
         private readonly ElementASTNode _node;
+        public Dictionary<string, string> Attributes => _node.Attributes;
 
         public RenderTreeNode(ElementASTNode node)
         {

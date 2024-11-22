@@ -16,11 +16,6 @@ namespace Webbrowser.HTMLRenderer.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult RenderResult()
-        {
             var engine = new HtmlEngine();
             engine.SetFilePathResolver(x => AppContext.BaseDirectory + "\\DemoFiles\\" + x);
             var renderTree = engine.RenderRaw(System.IO.File.ReadAllText(AppContext.BaseDirectory + "\\DemoFiles\\index.html"));

@@ -4,7 +4,7 @@ namespace Webbrowser.Core
 {
     public class RenderTreeGenerator
     {
-        private readonly string[] _visibleElements = { "p", "div", "h1", "h2", "body" };
+        private readonly string[] _visibleElements = { "p", "div", "h1", "h2", "body", "img" };
         private readonly List<CSSRuleSet> _cssRules;
         public ElementASTNode TopLevelNode { get; set; }
 

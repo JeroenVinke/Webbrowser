@@ -33,6 +33,10 @@ namespace Webbrowser.HTMLRenderer
 
         private string GetHTML(RenderTreeNode node)
         {
+            if (node.Element == "img")
+            {
+                return "<img src='" + node.Attributes["src"] + "' " + GetStyles(node) + "/>";
+            }
             string result = "<" + node.Element + " " + GetStyles(node) + ">";
 
             result += node.InnerText;
