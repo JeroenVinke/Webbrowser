@@ -2,3 +2,7 @@
     color: red; 
     text-color: blue; 
 }
+
+.container {
+    display: flex;
+}

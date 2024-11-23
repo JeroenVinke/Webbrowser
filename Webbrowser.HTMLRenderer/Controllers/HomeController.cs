@@ -16,6 +16,13 @@ namespace Webbrowser.HTMLRenderer.Controllers
 
         public IActionResult Index()
         {
+            return RenderView(new RenderViewRequest());
+            //return View();
+        }
+
+        [HttpPost]
+        public IActionResult RenderView(RenderViewRequest request)
+        {
             var engine = new HtmlEngine();
             engine.SetFilePathResolver(x => AppContext.BaseDirectory + "\\DemoFiles\\" + x);
             var renderTree = engine.RenderRaw(System.IO.File.ReadAllText(AppContext.BaseDirectory + "\\DemoFiles\\index.html"));
@@ -35,5 +42,10 @@ namespace Webbrowser.HTMLRenderer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+    }
+
+    public class RenderViewRequest
+    {
+        public int PageNr { get; set; }
     }
 }

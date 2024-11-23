@@ -53,7 +53,17 @@ namespace Webbrowser.HTMLRenderer
 
         private string GetStyles(RenderTreeNode node)
         {
-            return "style='" + string.Join(";", node.CSSProperties.Select(x => string.Join(":", x.Key, x.Value))) + "'";
+            return "style='" + string.Join(";", GetCSSProperties(node).Select(x => string.Join(":", x.Key, x.Value))) + "'";
+        }
+
+        private Dictionary<string, string> GetCSSProperties(RenderTreeNode node)
+        {
+            var props = new Dictionary<string,string>(node.CSSProperties);
+
+            props["position"] = "absolute";
+            props["left"] = node.Position.X.ToString();
+            props["top"] = node.Position.Y.ToString();
+            return props;
         }
 
         private string GetHead()

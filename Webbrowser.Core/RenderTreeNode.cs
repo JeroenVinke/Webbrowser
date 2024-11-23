@@ -29,10 +29,11 @@ namespace Webbrowser.Core
 
         public int CalculatedWidth { get; private set; }
         public int CalculatedHeight { get; private set; }
+        public Point Position { get; private set; }
 
-        public Dictionary<string, string> CSSProperties = new Dictionary<string, string>()
+        public Dictionary<string, string> CSSProperties = new()
         {
-            { "background-color", "white" },
+            { "display", "block" },
             { "color", "black" },
             { "padding-left", "0px" },
             { "padding-right", "0px" },
@@ -62,7 +63,7 @@ namespace Webbrowser.Core
 
         public List<RenderTreeNode> Children { get; set; } = new ();
 
-        public RenderTreeNode Parent { get; set; }
+        public RenderTreeNode? Parent { get; set; }
 
         public void AddChild(RenderTreeNode node)
         {
@@ -187,7 +188,7 @@ namespace Webbrowser.Core
 
         private void ApplyHtmlStyles()
         {
-            string background = _node.Attributes.GetValueOrDefault("background") ?? "white";
+            string? background = _node.Attributes.GetValueOrDefault("background");
             if (!string.IsNullOrEmpty(background))
             {
                 CSSProperties["background-color"] = background;
@@ -197,6 +198,19 @@ namespace Webbrowser.Core
             if (!string.IsNullOrEmpty(color))
             {
                 CSSProperties["color"] = color;
+            }
+        }
+
+        public void CalculatePosition()
+        {
+            Position = new Point(Parent?.Position.X ?? 0, Parent?.Position.Y ?? 0);
+
+            Position.X += 100;
+            Position.Y += 100;
+
+            foreach (var child in Children)
+            {
+                child.CalculatePosition();
             }
         }
     }

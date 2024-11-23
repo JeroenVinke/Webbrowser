@@ -5,11 +5,12 @@ namespace Webbrowser.Core
 {
     public class HtmlEngine
     {
-        private Func<string, string> _filePathResolver = new Func<string, string>(input => input);
+        private Func<string, string> _filePathResolver = input => input;
+
+        private List<CSSRuleSet> _cssRules = new List<CSSRuleSet>();
 
         public RenderTreeNode RenderRaw(string html)
         {
-            var cssRules = new List<CSSRuleSet>();
             var htmlParser = new HTMLParser.BottomUpParser();
 
             LexicalAnalyzer htmlAnalyzer = new LexicalAnalyzer(HTMLLexicalAnalyer.LexicalLanguage.GetLanguage(), html);
@@ -20,9 +21,11 @@ namespace Webbrowser.Core
             var head = node.Children.First(x => x.ElementName == "head");
             ProcessHead(head);
 
-            RenderTreeNode renderTreeNode = new RenderTreeGenerator(node, cssRules).Generate();
+            RenderTreeNode renderTreeNode = new RenderTreeGenerator(node, _cssRules).Generate();
 
             renderTreeNode.CalculateDimensions();
+
+            renderTreeNode.CalculatePosition();
 
             return renderTreeNode;
         }
@@ -35,7 +38,7 @@ namespace Webbrowser.Core
                 {
                     var href = child.Attributes.First(x => x.Key == "href").Value;
                     var cssRules = new CssEngine().GetRulesForRawText(File.ReadAllText(_filePathResolver.Invoke(href)));
-                    cssRules.AddRange(cssRules);
+                    _cssRules.AddRange(cssRules);
                 }
             }
         }

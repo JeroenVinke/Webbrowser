@@ -1,8 +1,53 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Jeroen's webbrowser/renderer";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="form-container">
+    <form asp-controller="Home" asp-action="RenderView" method="POST">
+        <select name="pageNr" class="combobox">
+            <option value="1">Eigen pagina</option>
+        </select>
+        <button type="submit" class="submit-button">Submit</button>
+    </form>
 </div>
+
+<style>
+    .form-container {
+        margin: 20px;
+    }
+
+    .form-container form {
+        display: flex;
+        align-items: center;
+    }
+
+    .input-text {
+        height: 40px;
+        padding: 5px 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        outline: none;
+        flex-grow: 1;
+    }
+
+    .input-text:focus {
+        border-color: #007BFF;
+    }
+
+    .submit-button {
+        height: 40px; /* Match the height of the input */
+        margin-left: 10px;
+        padding: 0 15px;
+        font-size: 16px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .submit-button:hover {
+        background-color: #0056b3;
+    }
+</style>
