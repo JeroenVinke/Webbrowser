@@ -35,6 +35,7 @@ namespace Webbrowser.Core
         {
             { "display", "block" },
             { "color", "black" },
+            { "flex-direction", "row" },
             { "padding-left", "0px" },
             { "padding-right", "0px" },
             { "padding-top", "0px" },
@@ -73,6 +74,11 @@ namespace Webbrowser.Core
 
         public void CalculateDimensions()
         {
+            foreach (var child in Children)
+            {
+                child.CalculateDimensions();
+            }
+
             // Calculate content width
             if (Width.HasValue)
             {
@@ -108,11 +114,6 @@ namespace Webbrowser.Core
                                PaddingTop + PaddingBottom +
                                BorderTop + BorderBottom +
                                MarginTop + MarginBottom;
-
-            foreach (var child in Children)
-            {
-                child.CalculateDimensions();
-            }
         }
 
         private int? GetSizeInPixels(string property)
@@ -203,10 +204,49 @@ namespace Webbrowser.Core
 
         public void CalculatePosition()
         {
-            Position = new Point(Parent?.Position.X ?? 0, Parent?.Position.Y ?? 0);
+            Position = new Point(Parent?.Position.X + (Parent?.PaddingLeft) ?? 0 + (Parent?.MarginLeft) ?? 0, Parent?.Position.Y + (Parent?.PaddingTop) ?? 0 + (Parent?.MarginTop) ?? 0);
 
-            Position.X += 100;
-            Position.Y += 100;
+            var currentSiblingIndex = Parent?.Children.FindIndex(x => x == this);
+            var previousSibling = currentSiblingIndex != null && currentSiblingIndex > 0 ? Parent?.Children[currentSiblingIndex.Value - 1] : null;
+
+            if (Parent?.CSSProperties["display"] == "flex")
+            {
+                if (previousSibling != null)
+                {
+                    if (Parent?.CSSProperties["flex-direction"] == "row")
+                    {
+                        Position = new Point(previousSibling.Position.X + previousSibling.CalculatedWidth, previousSibling.Position.Y);
+                    }
+                    if (Parent?.CSSProperties["flex-direction"] == "column")
+                    {
+                        Position = new Point(previousSibling.Position.X, previousSibling.Position.Y + previousSibling.CalculatedHeight);
+                    }
+                }
+                else
+                {
+                    // ?
+                    //Position = new Point(Parent?.Position.X + )
+                }
+            }
+            else if (CSSProperties["display"] == "inline-block")
+            {
+                if (previousSibling != null && previousSibling.CSSProperties["display"] == "inline-blocK")
+                {
+                    Position = new Point(previousSibling.Position.X + previousSibling.CalculatedWidth, previousSibling.Position.Y);
+                }
+                else if (previousSibling != null)
+                {
+                    Position = new Point(previousSibling.Position.X,
+                        previousSibling.Position.Y + previousSibling.CalculatedHeight);
+                }
+            }
+            else
+            {
+                if (previousSibling != null)
+                {
+                    Position = new Point(previousSibling.Position.X, previousSibling.Position.Y + previousSibling.CalculatedHeight);
+                }
+            }
 
             foreach (var child in Children)
             {

@@ -17,7 +17,7 @@ namespace CSSLexicalAnalyzer
             lexLanguage.Add(";#", (string value) => { return new WordToken { Type = TokenType.Semicolon }; });
             lexLanguage.Add("{#", (string value) => { return new WordToken { Type = TokenType.BracketOpen }; });
             lexLanguage.Add("}#", (string value) => { return new WordToken { Type = TokenType.BracketClosed }; });
-            lexLanguage.Add("([a-zA-Z0-9]|-|.)+#", (string value) =>
+            lexLanguage.Add("([a-zA-Z0-9]|-|.|,| |\\#|%)+#", (string value) =>
             {
                 return new WordToken { Type = TokenType.Identifier, Lexeme = value };
             });

@@ -1,0 +1,9 @@
+﻿p { 
+    color: red; 
+    text-color: blue; 
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+}

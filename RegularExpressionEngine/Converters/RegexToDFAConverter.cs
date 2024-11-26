@@ -49,10 +49,11 @@ namespace Compiler.RegularExpressionEngine
             {
                 Node S = DStates.Keys.First(x => !MarkedStates.Contains(x));
                 MarkedStates.Add(S);
+                int i = 0;
                 foreach (char a in Alphabet)
                 {
                     SyntaxTreeNodeSet U = new SyntaxTreeNodeSet(DStates[S].Where(x => x.Character == a).SelectMany(x => x.FollowPos).Distinct().ToList());
-                    bool isAccepting = U.Any(x => x.Character == '#');
+                    bool isAccepting = U.Where((x, index) => x.Character == '#' && (index == 0 || U[index - 1].Character != '\\')).Any();
                     if (U.Any())
                     {
                         Node targetNode = DStates.FirstOrDefault(x => x.Value.IsEqualTo(U)).Key;
@@ -70,12 +71,14 @@ namespace Compiler.RegularExpressionEngine
                             targetNode.IsAccepting = true;
                         }
 
-                        if (a != '#')
-                        {
+                        //if (a != '#')
+                        //{
                             DTrans.Add((S, a, targetNode));
                             new Edge(a, S, targetNode);
-                        }
+                        //}
                     }
+
+                    i++;
                 }
             }
 

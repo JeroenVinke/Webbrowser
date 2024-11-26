@@ -60,7 +60,7 @@ namespace Webbrowser.HTMLRenderer
         {
             var props = new Dictionary<string,string>(node.CSSProperties);
 
-            props["position"] = "absolute";
+            props["position"] = "static";
             props["left"] = node.Position.X.ToString();
             props["top"] = node.Position.Y.ToString();
             return props;

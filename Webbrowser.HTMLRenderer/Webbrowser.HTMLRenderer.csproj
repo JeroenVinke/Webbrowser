@@ -13,12 +13,25 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="DemoFiles\Demo1\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DemoFiles\Demo2\index.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="DemoFiles\Demo2\index.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="DemoFiles\index.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="DemoFiles\index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DemoFiles\Demo3\" />
   </ItemGroup>
 
 </Project>
